@@ -4,7 +4,7 @@ project(@EXECUTABLE_NAME@)
 set(${PROJECT_NAME}_INCLUDE_DIR
     "${PROJECT_SOURCE_DIR}/include")
 
-add_library(${PROJECT_NAME}
+add_executable(${PROJECT_NAME}
     src/@SOURCE_NAME@.cxx
     )
 
