@@ -1,2 +1,3 @@
-add_subdirectory(@LIBRARY_NAME@)
-add_subdirectory(@EXECUTABLE_NAME@)
+add_subdirectory(cmcore)
+add_subdirectory(cmclient)
+add_subdirectory(cmserver)

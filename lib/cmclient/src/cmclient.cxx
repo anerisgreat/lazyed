@@ -1,4 +1,4 @@
-#include "@SOURCE_NAME@.hxx"
+#include "cmclient.hxx"
 
 int main(int argc, char *argv[]){
 

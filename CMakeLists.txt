@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 #Setting top-level project for directory
-project (@PROJECT_NAME@)
+project (cmacs)
 
 #Reading version name from version file
 file(STRINGS "${PROJECT_SOURCE_DIR}/version" ${PROJECT_NAME}_VERSION_ARR)
