@@ -1,10 +1,10 @@
-project(cmserver)
+project(CMServer)
 
 set(${PROJECT_NAME}_INCLUDE_DIR
     "${PROJECT_SOURCE_DIR}/include")
 
 add_executable(${PROJECT_NAME}
-    src/cmserver.cxx
+    src/CMServer.cxx
     )
 
 target_include_directories(${PROJECT_NAME}
@@ -16,6 +16,6 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     #PUBLIC
-    cmcore
+    CMCore
     )
 

@@ -1,10 +1,10 @@
-project(cmcore)
+project(CMClient)
 
 set(${PROJECT_NAME}_INCLUDE_DIR
     "${PROJECT_SOURCE_DIR}/include")
 
-add_library(${PROJECT_NAME}
-    src/cmcore.cxx
+add_executable(${PROJECT_NAME}
+    src/CMClient.cxx
     )
 
 target_include_directories(${PROJECT_NAME}
@@ -16,6 +16,6 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     #PUBLIC
-    #@OTHER_LIBRARY@
+    CMCore
     )
 

@@ -1,3 +1,3 @@
-add_subdirectory(cmcore)
-add_subdirectory(cmclient)
-add_subdirectory(cmserver)
+add_subdirectory(CMCore)
+add_subdirectory(CMClient)
+add_subdirectory(CMServer)

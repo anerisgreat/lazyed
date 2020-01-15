@@ -1,5 +1,5 @@
 ---
-title: PROJECT TITLE
-author: PROJECT AUTHOR
+title: cmacs
+author: Aner Zakovitch
 ---
 
