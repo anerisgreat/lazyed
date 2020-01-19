@@ -1,3 +1,1 @@
-add_subdirectory(CMCore)
-add_subdirectory(CMClient)
-add_subdirectory(CMServer)
+add_subdirectory(LazyEdCore)

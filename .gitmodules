@@ -1,0 +1,3 @@
+[submodule "dependencies/lazycore"]
+	path = dependencies/lazycore
+	url = https://github.com/anerisgreat/lazycore.git

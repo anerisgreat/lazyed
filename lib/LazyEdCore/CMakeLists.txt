@@ -1,10 +1,10 @@
-project(CMCore)
+project(LazyEdCore)
 
 set(${PROJECT_NAME}_INCLUDE_DIR
     "${PROJECT_SOURCE_DIR}/include")
 
 add_library(${PROJECT_NAME}
-    src/CMCore.cxx
+    src/LazyEdCore.cxx
     )
 
 target_include_directories(${PROJECT_NAME}
@@ -15,7 +15,7 @@ target_include_directories(${PROJECT_NAME}
     )
 
 target_link_libraries(${PROJECT_NAME}
-    #PUBLIC
-    #@OTHER_LIBRARY@
+    PRIVATE
+    LazyPool
     )
 
