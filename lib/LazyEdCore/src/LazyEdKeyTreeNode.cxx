@@ -1,23 +1,24 @@
-#include "LazyEdKeyTree.hxx"
+#include "LazyEdKeyTreeNode.hxx"
 #include "LazyEdTrigger.hxx"
 
 #include <exception>
 
 namespace LazyEd{
 
-LazyEdKeyTree::LazyEdKeyTree(LazyCore::ObjectPool<LazyEdKeyTree>& p_keyPool)
+LazyEdKeyTreeNode::LazyEdKeyTreeNode(
+        LazyCore::ObjectPool<LazyEdKeyTreeNode>& p_keyPool)
     : m_keyPool(p_keyPool)
 {}
 
-LazyEdKeyTree* LazyEdKeyTree::GetExtention(short p_input){
+LazyEdKeyTreeNode* LazyEdKeyTreeNode::GetExtention(short p_input){
     return m_extentions[p_input];
 }
 
-const bool LazyEdKeyTree::IsFinal(){
+const bool LazyEdKeyTreeNode::IsFinal(){
     return m_extentions.size() == 0;
 }
 
-void LazyEdKeyTree::Trigger(){
+void LazyEdKeyTreeNode::Trigger(){
     if(m_trigger.get() != nullptr){
         m_trigger->Trigger();
     }
@@ -26,7 +27,7 @@ void LazyEdKeyTree::Trigger(){
     }
 }
 
-std::shared_ptr<LazyEdKeyTree> LazyEdKeyTree::Register(
+std::shared_ptr<LazyEdKeyTreeNode> LazyEdKeyTreeNode::Register(
     std::shared_ptr<LazyEdTrigger> p_trigger,
     const std::vector<short>& p_sequence)
 {
@@ -34,7 +35,7 @@ std::shared_ptr<LazyEdKeyTree> LazyEdKeyTree::Register(
 }
 
 
-std::shared_ptr<LazyEdKeyTree> LazyEdKeyTree::Register(
+std::shared_ptr<LazyEdKeyTreeNode> LazyEdKeyTreeNode::Register(
         std::shared_ptr<LazyEdTrigger> p_trigger,
         const std::vector<short>& p_sequence,
         short p_index)
@@ -49,11 +50,11 @@ std::shared_ptr<LazyEdKeyTree> LazyEdKeyTree::Register(
         }
     }
     else{
-        std::map<short, LazyEdKeyTree*>::const_iterator it =
+        std::map<short, LazyEdKeyTreeNode*>::const_iterator it =
             m_extentions.find(p_sequence[p_index]);
         //If element does not exist
         if(it == m_extentions.end()){
-            LazyEdKeyTree* tmpKey = m_keyPool.AllocElement();
+            LazyEdKeyTreeNode* tmpKey = m_keyPool.AllocElement();
             m_extentions[p_sequence[p_index]] = tmpKey;
             m_extentionsReversed[tmpKey] = p_sequence[p_index];
         }
@@ -64,12 +65,12 @@ std::shared_ptr<LazyEdKeyTree> LazyEdKeyTree::Register(
     }
 }
 
-void LazyEdKeyTree::Unregister(){
+void LazyEdKeyTreeNode::Unregister(){
     Reset();
 }
 
-void LazyEdKeyTree::Reset(){
-    std::map<short, LazyEdKeyTree*>::iterator it = m_extentions.begin();
+void LazyEdKeyTreeNode::Reset(){
+    std::map<short, LazyEdKeyTreeNode*>::iterator it = m_extentions.begin();
 
     while(it != m_extentions.end()){
         it->second->Reset();
@@ -81,14 +82,14 @@ void LazyEdKeyTree::Reset(){
     m_trigger.reset();
 }
 
-void LazyEdKeyTree::CheckUnregisterFromChild(LazyEdKeyTree* child){
+void LazyEdKeyTreeNode::CheckUnregisterFromChild(LazyEdKeyTreeNode* child){
     if(m_trigger.get() != NULL){
         throw std::runtime_error(
                 "Attempting to send check unregister from child to node "
                 "that is final!");
     }
 
-    std::map<LazyEdKeyTree*, short>::const_iterator it =
+    std::map<LazyEdKeyTreeNode*, short>::const_iterator it =
         m_extentionsReversed.find(child);
     //If element does not exist
     if(it == m_extentionsReversed.end()){

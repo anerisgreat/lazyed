@@ -10,32 +10,32 @@
 
 namespace LazyEd{
 
-class LazyEdKeyTree:LazyCore::Resetable{
+class LazyEdKeyTreeNode:LazyCore::Resetable{
     public:
-        LazyEdKeyTree(LazyCore::ObjectPool<LazyEdKeyTree>& p_keyPool);
+        LazyEdKeyTreeNode(LazyCore::ObjectPool<LazyEdKeyTreeNode>& p_keyPool);
 
-        LazyEdKeyTree* GetExtention(short p_input);
+        LazyEdKeyTreeNode* GetExtention(short p_input);
         const bool IsFinal();
         void Trigger();
-        std::shared_ptr<LazyEdKeyTree> Register(
+        std::shared_ptr<LazyEdKeyTreeNode> Register(
                 std::shared_ptr<LazyEdTrigger> p_trigger,
                 const std::vector<short>& p_sequence);
         void Unregister();
         void Reset();
     protected:
-        std::shared_ptr<LazyEdKeyTree> Register(
+        std::shared_ptr<LazyEdKeyTreeNode> Register(
                 std::shared_ptr<LazyEdTrigger> p_trigger,
                 const std::vector<short>& p_sequence,
                 short p_index);
 
-        void CheckUnregisterFromChild(LazyEdKeyTree* child);
+        void CheckUnregisterFromChild(LazyEdKeyTreeNode* child);
 
     private:
         std::shared_ptr<LazyEdTrigger> m_trigger;
-        std::map<short, LazyEdKeyTree*> m_extentions;
-        std::map<LazyEdKeyTree*, short> m_extentionsReversed;
-        LazyEdKeyTree* m_parent;
-        LazyCore::ObjectPool<LazyEdKeyTree>& m_keyPool;
+        std::map<short, LazyEdKeyTreeNode*> m_extentions;
+        std::map<LazyEdKeyTreeNode*, short> m_extentionsReversed;
+        LazyEdKeyTreeNode* m_parent;
+        LazyCore::ObjectPool<LazyEdKeyTreeNode>& m_keyPool;
 };
 
 }
