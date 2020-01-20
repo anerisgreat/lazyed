@@ -5,6 +5,7 @@ set(${PROJECT_NAME}_INCLUDE_DIR
 
 add_library(${PROJECT_NAME}
     src/LazyEdCore.cxx
+    src/LazyEdKeyTree.cxx
     )
 
 target_include_directories(${PROJECT_NAME}
