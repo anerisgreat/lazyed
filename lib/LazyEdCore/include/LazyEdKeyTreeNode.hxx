@@ -7,9 +7,9 @@
 #include <memory>
 #include <map>
 #include <vector>
+#include <functional>
 
 namespace LazyEd{
-
 class LazyEdKeyTreeNode:LazyCore::Resetable{
     public:
         LazyEdKeyTreeNode(LazyCore::ObjectPool<LazyEdKeyTreeNode>& p_keyPool);
@@ -17,21 +17,21 @@ class LazyEdKeyTreeNode:LazyCore::Resetable{
         LazyEdKeyTreeNode* GetExtention(short p_input);
         const bool IsFinal();
         void Trigger();
-        std::shared_ptr<LazyEdKeyTreeNode> Register(
-                std::shared_ptr<LazyEdTrigger> p_trigger,
+        LazyEdKeyTreeNode* Register(
+                std::function<void()> p_trigger,
                 const std::vector<short>& p_sequence);
         void Unregister();
         void Reset();
     protected:
-        std::shared_ptr<LazyEdKeyTreeNode> Register(
-                std::shared_ptr<LazyEdTrigger> p_trigger,
+        LazyEdKeyTreeNode* Register(
+                std::function<void()> p_trigger,
                 const std::vector<short>& p_sequence,
                 short p_index);
 
         void CheckUnregisterFromChild(LazyEdKeyTreeNode* child);
 
     private:
-        std::shared_ptr<LazyEdTrigger> m_trigger;
+        std::function<void()> m_trigger;
         std::map<short, LazyEdKeyTreeNode*> m_extentions;
         std::map<LazyEdKeyTreeNode*, short> m_extentionsReversed;
         LazyEdKeyTreeNode* m_parent;

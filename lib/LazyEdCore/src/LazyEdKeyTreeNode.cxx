@@ -19,30 +19,31 @@ const bool LazyEdKeyTreeNode::IsFinal(){
 }
 
 void LazyEdKeyTreeNode::Trigger(){
-    if(m_trigger.get() != nullptr){
-        m_trigger->Trigger();
+    if(m_trigger != NULL){
+        m_trigger();
     }
     else{
         throw std::runtime_error("Key trigger was called with no operation!");
     }
 }
 
-std::shared_ptr<LazyEdKeyTreeNode> LazyEdKeyTreeNode::Register(
-    std::shared_ptr<LazyEdTrigger> p_trigger,
+LazyEdKeyTreeNode* LazyEdKeyTreeNode::Register(
+    std::function<void()> p_trigger,
     const std::vector<short>& p_sequence)
 {
     return Register(p_trigger, p_sequence, 0);
 }
 
 
-std::shared_ptr<LazyEdKeyTreeNode> LazyEdKeyTreeNode::Register(
-        std::shared_ptr<LazyEdTrigger> p_trigger,
+LazyEdKeyTreeNode* LazyEdKeyTreeNode::Register(
+        std::function<void()> p_trigger,
         const std::vector<short>& p_sequence,
         short p_index)
 {
     if(p_index == p_sequence.size()){
         if(IsFinal()){
             m_trigger = p_trigger;
+            return this;
         }
         else{
             throw std::runtime_error(
@@ -62,6 +63,7 @@ std::shared_ptr<LazyEdKeyTreeNode> LazyEdKeyTreeNode::Register(
                 p_trigger,
                 p_sequence,
                 p_index + 1);
+        return m_extentions[p_sequence[p_index]];
     }
 }
 
@@ -77,13 +79,13 @@ void LazyEdKeyTreeNode::Reset(){
         m_keyPool.Release(it->second);
     }
 
+    m_trigger = NULL;
     m_extentions.clear();
     m_extentionsReversed.clear();
-    m_trigger.reset();
 }
 
 void LazyEdKeyTreeNode::CheckUnregisterFromChild(LazyEdKeyTreeNode* child){
-    if(m_trigger.get() != NULL){
+    if(m_trigger != NULL){
         throw std::runtime_error(
                 "Attempting to send check unregister from child to node "
                 "that is final!");
