@@ -13,8 +13,9 @@ class LazyBinMemTreeNode{
         LazyBinMemTreeNode();
     private:
         std::shared_ptr<char[]> m_mem;
-        std::shared_ptr<LazyEdMemTreeNode> m_left;
-        std::shared_ptr<LazyEdMemTreeNode> m_right;
+        std::shared_ptr<LazyBinMemTreeNode> m_left;
+        std::shared_ptr<LazyBinMemTreeNode> m_right;
+        unsigned long m_delimCount;
 };
 
 class LazyEdBinMemTree{
